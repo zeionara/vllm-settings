@@ -1,0 +1,18 @@
+services:
+  vllm:
+    image: vllm/vllm-openai:qwen3_5
+    privileged: true
+    shm_size: 2gb
+    container_name: vllm
+    ports:
+      - 8000:80
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/vllm/.cache:/root/.cache
+    restart: unless-stopped
+    entrypoint: |
+      vllm serve Qwen/Qwen3.5-2B
+        --reasoning-parser qwen3
+        --max-model-len 512
+        --max-num-seqs 1
+        --max-num-batched-tokens 256
+        --port 80
