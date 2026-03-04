@@ -9,6 +9,8 @@ services:
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/vllm/.cache:/root/.cache
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       VLLM_LOGGING_LEVEL: DEBUG
     entrypoint: |
