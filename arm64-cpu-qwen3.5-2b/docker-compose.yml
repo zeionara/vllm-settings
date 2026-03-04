@@ -22,4 +22,3 @@ services:
         --max-num-batched-tokens 256
         --port 80
         --enforce-eager
-        --disable-custom-kernels
