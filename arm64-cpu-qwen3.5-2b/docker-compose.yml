@@ -1,6 +1,6 @@
 services:
   vllm:
-    image: vllm/vllm-openai:qwen3_5
+    image: public.ecr.aws/q9t5s3a7/vllm-arm64-cpu-release-repo:v0.16.0-qwen3.5-nightly
     privileged: true
     shm_size: 2gb
     container_name: vllm
@@ -9,6 +9,8 @@ services:
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/vllm/.cache:/root/.cache
     restart: unless-stopped
+    environment:
+      VLLM_LOGGING_LEVEL: DEBUG
     entrypoint: |
       vllm serve Qwen/Qwen3.5-2B
         --reasoning-parser qwen3
