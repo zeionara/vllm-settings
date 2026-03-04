@@ -3,7 +3,7 @@ services:
     image: public.ecr.aws/q9t5s3a7/vllm-arm64-cpu-release-repo:v0.16.0-qwen3.5-fixed
     privileged: true
     shm_size: 2gb
-    container_name: vllm
+    container_name: vllm-qwen3.5-2b
     ports:
       - 8000:80
     volumes:
