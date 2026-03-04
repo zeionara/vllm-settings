@@ -1,6 +1,6 @@
 services:
   vllm:
-    image: public.ecr.aws/q9t5s3a7/vllm-arm64-cpu-release-repo:v0.16.0-qwen3.5-nightly
+    image: public.ecr.aws/q9t5s3a7/vllm-arm64-cpu-release-repo:v0.16.0-qwen3.5-fixed
     privileged: true
     shm_size: 2gb
     container_name: vllm
@@ -8,11 +8,12 @@ services:
       - 8000:80
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/vllm/.cache:/root/.cache
-    restart: unless-stopped
+    # restart: unless-stopped
     env_file:
       - .env
     environment:
       VLLM_LOGGING_LEVEL: DEBUG
+      # VLLM_DISABLE_COMPILE: 1
     entrypoint: |
       vllm serve Qwen/Qwen3.5-2B
         --reasoning-parser qwen3
@@ -20,3 +21,5 @@ services:
         --max-num-seqs 1
         --max-num-batched-tokens 256
         --port 80
+        --enforce-eager
+        --disable-custom-kernels
